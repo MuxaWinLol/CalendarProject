@@ -14,13 +14,16 @@ class DialogNoti(QDialog):
         uic.loadUi('CreateNotiDialog.ui', self)
         self.setWindowTitle("Calendar - управление напоминаниями")
         self.setWindowIcon(QtGui.QIcon("icon.ico"))
+
         self.model = QtGui.QStandardItemModel()
         self.listView.setModel(self.model)
         self.pushButton.clicked.connect(self.run)
-        self.finished.connect(self.save)
+        self.buttonBox.accepted.connect(self.save)
+
         with open("notis.txt", "r", encoding="UTF-8") as fl:
             self.lst = [i.strip() for i in fl.readlines() if i.strip()]
-            self.upd()
+
+        self.upd()
 
     def run(self):
         now = datetime.now().strftime("%Y/%m/%d %H:%M")

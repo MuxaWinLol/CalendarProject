@@ -1,9 +1,11 @@
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QDialog, QFileDialog, QListView
-import sqlite3
-from PyQt5 import QtGui
-from PyQt5 import uic
 import sys
+import sqlite3
+
+from PyQt5 import uic
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QApplication
 
 
 class DialogAlarm(QDialog):
@@ -14,12 +16,13 @@ class DialogAlarm(QDialog):
         self.setWindowIcon(QtGui.QIcon("icon.ico"))
         self.pushButton.clicked.connect(self.res)
         self.pushButton_2.clicked.connect(self.get_file)
+        self.buttonBox.accepted.connect(self.save)
 
         [i.clicked.connect(self.run) for i in (self.radioButton_8, self.radioButton_9)]
         self.btns = [self.radioButton, self.radioButton_2, self.radioButton_3,
                      self.radioButton_4, self.radioButton_5, self.radioButton_6, self.radioButton_7]
         self.pth = ""
-        with open("rigthonepath.txt", "r", encoding="UTF-8") as f:
+        with open("settings.txt", "r", encoding="UTF-8") as f:
             self.defaultpth = f.read()
 
         if self.defaultpth:
@@ -34,7 +37,6 @@ class DialogAlarm(QDialog):
             self.pushButton.setEnabled(False)
         self.model = QtGui.QStandardItemModel()
         self.listView.setModel(self.model)
-        self.finished.connect(self.save)
         con = sqlite3.connect("alarms.sqlite")
         cur = con.cursor()
         tmp = cur.execute("""SELECT name, time, days, ringpath FROM alarms WHERE TRUE """).fetchall()

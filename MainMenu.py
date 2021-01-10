@@ -10,9 +10,10 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QApplication
 
-from alarm import DialogAlarm
-from noti import DialogNoti
 from noti import fileout
+from noti import DialogNoti
+from alarm import DialogAlarm
+from settings import DialogSettings
 
 
 class MainWindow(QMainWindow):
@@ -28,6 +29,7 @@ class MainWindow(QMainWindow):
         self.pushButton_4.clicked.connect(self.stopbutton)
         self.pushButton_4.setEnabled(False)
         self.pushButton_4.setVisible(False)
+        self.pushButton_5.clicked.connect(self.create_settings)
         t = QTimer(self)
         t.timeout.connect(self.upd)
         t.start(1000)
@@ -90,6 +92,10 @@ class MainWindow(QMainWindow):
         self.notusedbutton = False
         self.pushButton_4.setEnabled(False)
         self.pushButton_4.setVisible(False)
+
+    def create_settings(self):
+        self.dsettings = DialogSettings()
+        self.dsettings.show()
 
 
 if __name__ == '__main__':
