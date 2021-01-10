@@ -28,9 +28,9 @@
     <property name="geometry">
      <rect>
       <x>420</x>
-      <y>20</y>
+      <y>130</y>
       <width>221</width>
-      <height>81</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -41,9 +41,9 @@
     <property name="geometry">
      <rect>
       <x>420</x>
-      <y>120</y>
+      <y>190</y>
       <width>221</width>
-      <height>81</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -54,9 +54,9 @@
     <property name="geometry">
      <rect>
       <x>420</x>
-      <y>220</y>
+      <y>250</y>
       <width>221</width>
-      <height>81</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -74,6 +74,19 @@
     </property>
     <property name="text">
      <string>настройки</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>10</y>
+      <width>221</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Остановить будильник</string>
     </property>
    </widget>
   </widget>

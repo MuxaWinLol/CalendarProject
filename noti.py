@@ -1,9 +1,11 @@
+import sys
+
+from datetime import datetime
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QDialog
-from datetime import datetime
 from PyQt5 import QtGui
 from PyQt5 import uic
-import sys
+
 
 
 class DialogNoti(QDialog):

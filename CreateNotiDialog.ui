@@ -59,15 +59,15 @@
     </rect>
    </property>
    <property name="text">
-    <string>Добавить событие</string>
+    <string>Создать</string>
    </property>
   </widget>
   <widget class="QTimeEdit" name="timeEdit">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>70</x>
      <y>40</y>
-     <width>311</width>
+     <width>261</width>
      <height>22</height>
     </rect>
    </property>
@@ -132,6 +132,19 @@
    </property>
    <property name="text">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Редактирование существующих напоминаний&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;(сделать пустым, чтобы удалить)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>40</y>
+     <width>41</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Время:</string>
    </property>
   </widget>
  </widget>
