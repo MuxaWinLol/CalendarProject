@@ -1,15 +1,13 @@
-import sys
-
 from datetime import datetime
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QDialog
-from PyQt5 import QtGui
-from PyQt5 import uic
 
+from PyQt5 import uic
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import QDialog
 
 
 class DialogNoti(QDialog):
     def __init__(self):
+        # Инициализация класса
         super().__init__()
         uic.loadUi('CreateNotiDialog.ui', self)
         self.setWindowTitle("Calendar - управление напоминаниями")
@@ -20,12 +18,18 @@ class DialogNoti(QDialog):
         self.pushButton.clicked.connect(self.run)
         self.buttonBox.accepted.connect(self.save)
 
+        self.lst = []
+
+        self.set_init_data()
+        self.upd()
+
+    def set_init_data(self):
+        # Добавляет к списку self.lst все уведомления из файла notis.txt
         with open("notis.txt", "r", encoding="UTF-8") as fl:
             self.lst = [i.strip() for i in fl.readlines() if i.strip()]
 
-        self.upd()
-
     def run(self):
+        # Добавляет уведомление в список self.lst, если дата еще не прошла
         now = datetime.now().strftime("%Y/%m/%d %H:%M")
         inp = f"{self.calendarWidget.selectedDate().toString('yyyy/MM/dd')} {self.timeEdit.text().rjust(5, '0')}"
         if now < inp:
@@ -36,23 +40,18 @@ class DialogNoti(QDialog):
             self.label_2.setText("Эта дата уже прошла.")
 
     def upd(self):
+        # Обновляет виджет listView
         self.lst.sort()
         self.model.clear()
         for i in self.lst:
             self.model.appendRow(QtGui.QStandardItem(i))
 
     def save(self):
+        # Сохраняет изменения в файл
         fileout("notis.txt", self.lst)
 
 
 def fileout(filename, lst):
-    open(filename, "w").close()
-    with open(filename, "w", encoding="UTF-8") as fl:
+    # Очищает файл filename и записывает в него информацию из списка lst
+    with open(filename, "w+", encoding="UTF-8") as fl:
         print(*lst, sep="\n", file=fl)
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = DialogNoti()
-    ex.show()
-    sys.exit(app.exec_())

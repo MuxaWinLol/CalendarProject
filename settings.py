@@ -1,4 +1,3 @@
-import sys
 import json
 
 import geocoder
@@ -6,11 +5,11 @@ from PyQt5 import uic
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtWidgets import QFileDialog
-from PyQt5.QtWidgets import QApplication
 
 
 class DialogSettings(QDialog):
     def __init__(self):
+        # Инициализация класса
         super().__init__()
         uic.loadUi('settings.ui', self)
         self.setWindowTitle("Calendar - настройки")
@@ -29,6 +28,7 @@ class DialogSettings(QDialog):
         self.lineEdit_2.textChanged.connect(self.upd)
 
     def set_init_data(self):
+        # Вставляет изначальные настройки из файла settings.txt в соответствующие поля
         with open("settings.txt", "r", encoding="UTF-8") as fl:
             rlns = fl.readlines()
         if len(rlns) == 2:
@@ -41,6 +41,7 @@ class DialogSettings(QDialog):
                 self.lineEdit_2.setText(loc[1])
 
     def get_file(self):
+        # Открывает диалог выбора файла
         fname = QFileDialog.getOpenFileName(self, 'Open file',
                                             'c:\\', "Music files (*.mp3 *.ogg *.wav)")[0]
         if fname:
@@ -48,16 +49,19 @@ class DialogSettings(QDialog):
             self.lineEdit_3.setText(f"\t\tВыбранный файл:   {self.pth}")
 
     def get_location(self):
+        # Берет геолокацию пользователя и вставляет ее в соответствующие поля
         g = str(geocoder.ip('me')[0])[1:-1].split(", ")
         self.lineEdit.setText(g[1])
         self.lineEdit_2.setText(g[2])
         self.label_5.setText("")
 
     def save(self):
+        # Сохраняет настройки в файл settings.txt
         with open("settings.txt", "w+", encoding="UTF-8") as fl:
             print(self.pth, f"{self.lineEdit.text()},{self.lineEdit_2.text()}", sep="\n", file=fl)
 
     def islocvalid(self):
+        # Проверяет на валидность локацию при помощи файла city.list.json
         with open("city.list.json", "r", encoding="UTF-8") as fl:
             data = json.load(fl)
 
@@ -75,15 +79,10 @@ class DialogSettings(QDialog):
             self.label_5.setText("Локация введена некорректно.")
 
     def upd(self):
+        # Обновляет доступность кнопки сохранения (смотрит на совпадение
         self.label_5.setText("")
-        if self.starttext != f"{self.lineEdit.text().capitalize()},{self.lineEdit_2.text().upper()}":
+        if self.starttext != f"{self.lineEdit.text().capitalize()}," \
+                             f"{self.lineEdit_2.text().upper()}":
             self.buttonBox.setEnabled(False)
         else:
             self.buttonBox.setEnabled(True)
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = DialogSettings()
-    ex.show()
-    sys.exit(app.exec_())
